@@ -23,8 +23,10 @@ Route.get('/', () => {
 })
 
 Route.group(() => {
-  Route.post('login', 'AuthController.login').validator('Auth')
-  Route.get('payload', 'AuthController.payload').middleware(['auth'])
+  Route.post('/login', 'AuthController.login').validator('Auth')
+  Route.get('/payload', 'AuthController.payload').middleware(['auth'])
+  Route.post('/refresh-token', 'AuthController.refreshToken').middleware(['auth'])
+  Route.put('/me', 'AuthController.update').middleware(['auth']).validator(['UpdateAuth'])
 }).prefix(`${PREFIX_ROUTE_BOF}/auth`)
 
 Route.group(() => {
@@ -34,4 +36,6 @@ Route.group(() => {
   Route.put('/:id', 'UserController.update').validator(['User'])
   Route.delete('/:id', 'UserController.delete')
 }).prefix(`${PREFIX_ROUTE_BOF}/users`).middleware(['auth'])
+
+Route.get(`${PREFIX_ROUTE_BOF}/sidebar`, 'SidebarController.getSidebar').middleware(['auth'])
 

@@ -107,12 +107,14 @@ class UserController {
     auth
   }) {
     const {
+      password = '',
       email,
       firstname,
       lastname,
       tel,
       role
     } = request.only([
+      'password',
       'email',
       'firstname',
       'lastname',
@@ -137,6 +139,9 @@ class UserController {
     }
 
     try {
+      if(password) {
+        user.password = password
+      }
       user.email = email
       user.firstname = firstname
       user.lastname = lastname
