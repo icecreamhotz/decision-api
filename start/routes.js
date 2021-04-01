@@ -15,11 +15,16 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
+const Helpers = use('Helpers')
 
 const PREFIX_ROUTE_BOF = 'api/v1/manage'
 
 Route.get('/', () => {
   return { greeting: 'Decision Project API' }
+})
+
+Route.get('/public/:path(.+)', async ({ params, response }) => {
+  return response.download(Helpers.publicPath(params.path))
 })
 
 Route.group(() => {
@@ -36,6 +41,14 @@ Route.group(() => {
   Route.put('/:id', 'UserController.update').validator(['User'])
   Route.delete('/:id', 'UserController.delete')
 }).prefix(`${PREFIX_ROUTE_BOF}/users`).middleware(['auth'])
+
+Route.group(() => {
+  Route.get('', 'DocumentProblemController.getLists')
+  Route.get('/:id', 'DocumentProblemController.getByID')
+  Route.post('', 'DocumentProblemController.store').validator(['DocumentProblem'])
+  Route.put('/:id', 'DocumentProblemController.update').validator(['DocumentProblem'])
+  Route.delete('/:id', 'DocumentProblemController.delete')
+}).prefix(`${PREFIX_ROUTE_BOF}/document-problems`).middleware(['auth'])
 
 Route.get(`${PREFIX_ROUTE_BOF}/sidebar`, 'SidebarController.getSidebar').middleware(['auth'])
 

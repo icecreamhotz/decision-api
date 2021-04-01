@@ -24,6 +24,7 @@ services:
       - REDIS_PASSWORD=
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - BASE_URL=http://localhost:3333
     volumes:
       - .:/usr/app/
       - /usr/app/src/node_modules

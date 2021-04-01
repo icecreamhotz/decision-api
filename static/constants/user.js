@@ -5,7 +5,7 @@ const ROLE = {
 
 const MENU = [
   {
-    icon: 'mdi-account-cog-outline',
+    icon: 'mdi-shield-account',
     text: 'จัดการข้อมูลส่วนตัว',
     route: '/me',
     children: [],
@@ -13,8 +13,15 @@ const MENU = [
   },
   {
     icon: 'mdi-account-cog-outline',
-    text: 'จัดการผู้ใช้',
+    text: 'จัดการผู้ใช้งานระบบ',
     route: '/user',
+    children: [],
+    roles: [ROLE.ADMIN, ROLE.STAFF]
+  },
+  {
+    icon: 'mdi-file',
+    text: 'จัดการเอกสารแก้ไขปัญหา',
+    route: '/document-problem',
     children: [],
     roles: [ROLE.ADMIN, ROLE.STAFF]
   },

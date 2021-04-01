@@ -18,6 +18,7 @@ class UserSchema extends Schema {
         'STAFF'
       ])
       table.timestamps()
+      table.datetime('deleted_at')
     })
   }
 
