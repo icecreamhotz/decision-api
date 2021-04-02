@@ -11,7 +11,7 @@ class DocumentProblem extends BaseValidator {
     }
     return {
       name: 'required',
-      file: 'file|file_size:10mb'
+      file: 'required|file'
     }
   }
 }

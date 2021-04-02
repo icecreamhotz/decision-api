@@ -10,4 +10,6 @@ tmp
 # The development sqlite file
 database/*.sqlite
 
-data/db
+data
+
+public

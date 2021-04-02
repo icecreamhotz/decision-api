@@ -146,7 +146,6 @@ class UserController {
     }
 
     try {
-      await Drive.delete(Helpers.publicPath(documentProblem.file))
       await documentProblem.delete()
     } catch(err) {
       console.error(err)

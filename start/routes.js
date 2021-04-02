@@ -50,5 +50,13 @@ Route.group(() => {
   Route.delete('/:id', 'DocumentProblemController.delete')
 }).prefix(`${PREFIX_ROUTE_BOF}/document-problems`).middleware(['auth'])
 
+Route.group(() => {
+  Route.get('', 'NewController.getLists')
+  Route.get('/:id', 'NewController.getByID')
+  Route.post('', 'NewController.store').validator(['New'])
+  Route.put('/:id', 'NewController.update').validator(['New'])
+  Route.delete('/:id', 'NewController.delete')
+}).prefix(`${PREFIX_ROUTE_BOF}/news`).middleware(['auth'])
+
 Route.get(`${PREFIX_ROUTE_BOF}/sidebar`, 'SidebarController.getSidebar').middleware(['auth'])
 

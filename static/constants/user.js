@@ -25,6 +25,20 @@ const MENU = [
     children: [],
     roles: [ROLE.ADMIN, ROLE.STAFF]
   },
+  {
+    icon: 'mdi-newspaper-variant-outline',
+    text: 'จัดการข้อมูลข่าวสาร',
+    route: '/new',
+    children: [],
+    roles: [ROLE.ADMIN, ROLE.STAFF]
+  },
+  {
+    icon: 'mdi-logout',
+    text: 'ออกจากระบบ',
+    route: '/logout',
+    children: [],
+    roles: [ROLE.ADMIN, ROLE.STAFF]
+  },
 ]
 
 module.exports = {
