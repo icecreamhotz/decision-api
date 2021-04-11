@@ -1,6 +1,0 @@
-./src/node_modules
-./src/npm-debug.log
-Dockerfile
-.dockerignore
-./src/.git
-./src/.gitignore
