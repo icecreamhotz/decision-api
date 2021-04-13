@@ -178,6 +178,7 @@ class ProblemController {
         return response.internalServerError()
       }
       if(childTrueExists.toJSON().length < child_true.length) {
+        console.log('hjeree');
         return response.badRequest()
       }
     }
@@ -195,6 +196,7 @@ class ProblemController {
         return response.internalServerError()
       }
       if(childFalseExists.toJSON().length < child_false.length) {
+        console.log('hjeree111');
         return response.badRequest()
       }
     }

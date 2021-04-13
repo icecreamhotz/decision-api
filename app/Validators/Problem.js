@@ -7,8 +7,8 @@ class Problem extends BaseValidator {
     return {
       title: 'required',
       description: 'required',
-      child_true: 'array',
-      child_false: 'array',
+      child_true: 'array|max:1',
+      child_false: 'array|max:1',
     }
   }
 }
