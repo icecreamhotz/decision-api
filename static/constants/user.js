@@ -40,6 +40,13 @@ const MENU = [
     roles: [ROLE.ADMIN, ROLE.STAFF]
   },
   {
+    icon: 'mdi-account-question-outline',
+    text: 'จัดการปัญหาที่เข้ามาใหม่',
+    route: '/problem-draft',
+    children: [],
+    roles: [ROLE.ADMIN, ROLE.STAFF]
+  },
+  {
     icon: 'mdi-logout',
     text: 'ออกจากระบบ',
     route: '/logout',

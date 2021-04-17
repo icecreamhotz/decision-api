@@ -7,6 +7,11 @@ class Problem extends Model {
   static boot () {
     super.boot()
     this.addTrait('@provider:Lucid/SoftDeletes')
+    this.addTrait('Searchable')
+  }
+
+  getIsHead(value) {
+    return !!value
   }
   
   childs () {

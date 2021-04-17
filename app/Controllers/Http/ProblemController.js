@@ -104,7 +104,8 @@ class ProblemController {
       problem = await Problem.create({
         title,
         description,
-        view: 0
+        view: 0,
+        score: 0
       }, trx)
       if(isHasChildTrue) {
         await ProblemChild.createMany(child_true.map(c => ({
@@ -237,7 +238,7 @@ class ProblemController {
     return response.apiCreated(problem)
   }
 
-  async delete({
+  async updateIsHead({
     params,
     response
   }) {
@@ -254,9 +255,44 @@ class ProblemController {
     }
 
     try {
-      await problem.delete()
+      problem.is_head = !problem.problem
+      await problem.save()
     } catch(err) {
       console.error(err)
+      return response.internalServerError()
+    }
+
+    return response.apiUpdated(problem)
+  }
+
+  async delete({
+    params,
+    response
+  }) {
+    let problem
+    try {
+      problem = await Problem.find(params.id)
+    } catch(err) {
+      console.error(err)
+      return response.internalServerError()
+    }
+
+    if(!problem) {
+      return response.notFound()
+    }
+
+    const trx = await Database.beginTransaction()
+    try {
+      await Promise.all([
+        problem.delete(trx),
+        ProblemChild.query()
+        .where('child_problem_id', params.id)
+        .delete(trx)
+      ])
+      await trx.commit()
+    } catch(err) {
+      console.error(err)
+      await trx.rollback()
       return response.internalServerError()
     }
 

@@ -18,6 +18,7 @@ const Route = use('Route')
 const Helpers = use('Helpers')
 
 const PREFIX_ROUTE_BOF = 'api/v1/manage'
+const PREFIX_ROUTE_PUBLIC = 'api/v1/public'
 
 Route.get('/', () => {
   return { greeting: 'Decision Project API' }
@@ -62,9 +63,17 @@ Route.group(() => {
   Route.get('', 'ProblemController.getLists')
   Route.get('/:id', 'ProblemController.getByID')
   Route.post('', 'ProblemController.store').validator(['Problem'])
+  Route.post('/:id/__active_ishead', 'ProblemController.updateIsHead')
   Route.put('/:id', 'ProblemController.update').validator(['Problem'])
   Route.delete('/:id', 'ProblemController.delete')
 }).prefix(`${PREFIX_ROUTE_BOF}/problems`).middleware(['auth'])
+
+Route.group(() => {
+  Route.get('', 'ProblemDraftController.getLists')
+  Route.get('/:id', 'ProblemDraftController.getByID')
+  Route.put('/:id', 'ProblemDraftController.update').validator(['ProblemDraft'])
+  Route.delete('/:id', 'ProblemDraftController.delete')
+}).prefix(`${PREFIX_ROUTE_BOF}/problem-drafts`).middleware(['auth'])
 
 Route.group(() => {
   Route.get('', 'ProblemChildController.getLists')
@@ -72,3 +81,18 @@ Route.group(() => {
 
 Route.get(`${PREFIX_ROUTE_BOF}/sidebar`, 'SidebarController.getSidebar').middleware(['auth'])
 
+// Public API
+Route.group(() => {
+  Route.get('', 'Frontend/NewController.getLists')
+  Route.get('/:id', 'Frontend/NewController.getByID')
+}).prefix(`${PREFIX_ROUTE_PUBLIC}/news`)
+
+Route.group(() => {
+  Route.get('', 'Frontend/ProblemController.getLists')
+  Route.post('/:id/count-view', 'Frontend/ProblemController.countView')
+  Route.post('/:id/vote', 'Frontend/ProblemController.vote').validator(['Vote'])
+}).prefix(`${PREFIX_ROUTE_PUBLIC}/problems`)
+
+Route.group(() => {
+  Route.post('', 'Frontend/ProblemDraftController.store').validator(['ProblemDraftFront'])
+}).prefix(`${PREFIX_ROUTE_PUBLIC}/problem-drafts`)

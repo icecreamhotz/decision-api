@@ -7,7 +7,7 @@ const Helpers = use('Helpers')
 const New = use('App/Models/New')
 const NewImage = use('App/Models/NewImage')
 
-class UserController {
+class NewController {
   async getLists({
     response,
     request
@@ -211,4 +211,4 @@ class UserController {
   }
 }
 
-module.exports = UserController
+module.exports = NewController
