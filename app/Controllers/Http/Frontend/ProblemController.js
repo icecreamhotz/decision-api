@@ -14,7 +14,8 @@ class ProblemController {
     const {
       title = '',
       problem_id = '',
-      sortBy = 'asc'
+      sortBy = 'asc',
+      problem_category_id
     } = request.all()
     
     let problems
@@ -28,6 +29,7 @@ class ProblemController {
           id: problem_id,
           is_head: problem_id ? undefined : true
         })
+        .where('problem_category_id', problem_category_id)
         .orderBy('score', sortBy)
         .fetch()
     } catch(err) {

@@ -1,6 +1,7 @@
 'use strict'
 
 const Database = use('Database')
+const ProblemCategory = use('App/Models/ProblemCategory')
 const Problem = use('App/Models/Problem')
 const ProblemChild = use('App/Models/ProblemChild')
 
@@ -16,6 +17,7 @@ class ProblemController {
     let problems
     try {
       problems = await Problem.query()
+        .with('problem_category')
         .paginate(page, perPage)
     } catch(err) {
       console.error(err)
@@ -52,12 +54,16 @@ class ProblemController {
     response
   }) {
     const {
+      problem_category_id,
       title,
+      detail,
       description,
       child_true = [],
       child_false = []
     } = request.only([
+      'problem_category_id',
       'title',
+      'detail',
       'description',
       'child_true',
       'child_false'
@@ -74,7 +80,6 @@ class ProblemController {
           .fetch()
       } catch(err) {
         console.error(err)
-        await trx.rollback()
         return response.internalServerError()
       }
       if(childTrueExists.toJSON().length < child_true.length) {
@@ -90,7 +95,6 @@ class ProblemController {
           .fetch()
       } catch(err) {
         console.error(err)
-        await trx.rollback()
         return response.internalServerError()
       }
       if(childFalseExists.toJSON().length < child_false.length) {
@@ -98,14 +102,28 @@ class ProblemController {
       }
     }
 
+    let problemCategory
+    try {
+      problemCategory = await ProblemCategory.find(problem_category_id)
+    } catch(err) {
+      console.error(err)
+      return response.internalServerError()
+    }
+    
+    if(!problemCategory) {
+      return response.badRequest()
+    }
+
     let problem
     const trx = await Database.beginTransaction()
     try {
       problem = await Problem.create({
         title,
+        detail,
         description,
         view: 0,
-        score: 0
+        score: 0,
+        problem_category_id
       }, trx)
       if(isHasChildTrue) {
         await ProblemChild.createMany(child_true.map(c => ({
@@ -140,12 +158,16 @@ class ProblemController {
   }) {
     const { id } = params
     const {
+      problem_category_id,
+      detail,
       title,
       description,
       child_true = [],
       child_false = []
     } = request.only([
+      'problem_category_id',
       'title',
+      'detail',
       'description',
       'child_true',
       'child_false'
@@ -175,7 +197,6 @@ class ProblemController {
           .fetch()
       } catch(err) {
         console.error(err)
-        await trx.rollback()
         return response.internalServerError()
       }
       if(childTrueExists.toJSON().length < child_true.length) {
@@ -193,19 +214,31 @@ class ProblemController {
           .fetch()
       } catch(err) {
         console.error(err)
-        await trx.rollback()
         return response.internalServerError()
       }
       if(childFalseExists.toJSON().length < child_false.length) {
-        console.log('hjeree111');
         return response.badRequest()
       }
+    }
+
+    let problemCategory
+    try {
+      problemCategory = await ProblemCategory.find(problem_category_id)
+    } catch(err) {
+      console.error(err)
+      return response.internalServerError()
+    }
+    
+    if(!problemCategory) {
+      return response.badRequest()
     }
 
     const trx = await Database.beginTransaction()
     try {
       problem.title = title
       problem.description = description
+      problem.detail = detail
+      problem.problem_category_id = problem_category_id
       await Promise.all([
         problem.save(trx),
         ProblemChild.query()

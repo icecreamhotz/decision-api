@@ -60,6 +60,14 @@ Route.group(() => {
 }).prefix(`${PREFIX_ROUTE_BOF}/news`).middleware(['auth'])
 
 Route.group(() => {
+  Route.get('', 'ProblemCategoryController.getLists')
+  Route.get('/:id', 'ProblemCategoryController.getByID')
+  Route.post('', 'ProblemCategoryController.store').validator(['ProblemCategory'])
+  Route.put('/:id', 'ProblemCategoryController.update').validator(['ProblemCategory'])
+  Route.delete('/:id', 'ProblemCategoryController.delete')
+}).prefix(`${PREFIX_ROUTE_BOF}/problem-categories`).middleware(['auth'])
+
+Route.group(() => {
   Route.get('', 'ProblemController.getLists')
   Route.get('/:id', 'ProblemController.getByID')
   Route.post('', 'ProblemController.store').validator(['Problem'])
@@ -92,6 +100,10 @@ Route.group(() => {
   Route.post('/:id/count-view', 'Frontend/ProblemController.countView')
   Route.post('/:id/vote', 'Frontend/ProblemController.vote').validator(['Vote'])
 }).prefix(`${PREFIX_ROUTE_PUBLIC}/problems`)
+
+Route.group(() => {
+  Route.get('', 'Frontend/ProblemCategoryController.getLists')
+}).prefix(`${PREFIX_ROUTE_PUBLIC}/problem-categories`)
 
 Route.group(() => {
   Route.post('', 'Frontend/ProblemDraftController.store').validator(['ProblemDraftFront'])

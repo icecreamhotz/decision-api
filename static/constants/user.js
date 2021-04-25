@@ -33,6 +33,13 @@ const MENU = [
     roles: [ROLE.ADMIN, ROLE.STAFF]
   },
   {
+    icon: 'mdi-shape-outline',
+    text: 'จัดการหมวดหมู่ปัญหาที่พบบ่อย',
+    route: '/problem-category',
+    children: [],
+    roles: [ROLE.ADMIN, ROLE.STAFF]
+  },
+  {
     icon: 'mdi-chat-question-outline',
     text: 'จัดการปัญหาที่พบบ่อย',
     route: '/problem',

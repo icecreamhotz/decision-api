@@ -17,6 +17,10 @@ class Problem extends Model {
   childs () {
     return this.hasMany('App/Models/ProblemChild')
   }
+
+  problem_category () {
+    return this.belongsTo('App/Models/ProblemCategory')
+  }
 }
 
 module.exports = Problem
