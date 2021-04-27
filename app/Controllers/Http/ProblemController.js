@@ -288,7 +288,7 @@ class ProblemController {
     }
 
     try {
-      problem.is_head = !problem.problem
+      problem.is_head = !problem.is_head
       await problem.save()
     } catch(err) {
       console.error(err)
