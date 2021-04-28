@@ -10,7 +10,7 @@ class Problem extends BaseValidator {
       detail: ' required',
       description: 'required',
       child_true: 'array|max:1',
-      child_false: 'array|max:1',
+      child_false: 'array|max:1'
     }
   }
 }

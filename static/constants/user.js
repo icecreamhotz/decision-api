@@ -18,13 +18,13 @@ const MENU = [
     children: [],
     roles: [ROLE.ADMIN, ROLE.STAFF]
   },
-  {
-    icon: 'mdi-file',
-    text: 'จัดการเอกสารแก้ไขปัญหา',
-    route: '/document-problem',
-    children: [],
-    roles: [ROLE.ADMIN, ROLE.STAFF]
-  },
+  // {
+  //   icon: 'mdi-file',
+  //   text: 'จัดการเอกสารแก้ไขปัญหา',
+  //   route: '/document-problem',
+  //   children: [],
+  //   roles: [ROLE.ADMIN, ROLE.STAFF]
+  // },
   {
     icon: 'mdi-newspaper-variant-outline',
     text: 'จัดการข่าวสาร',

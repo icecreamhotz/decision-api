@@ -1,5 +1,8 @@
 'use strict'
 
+const moment = use('moment')
+const Drive = use('Drive')
+const Helpers = use('Helpers')
 const Database = use('Database')
 const ProblemCategory = use('App/Models/ProblemCategory')
 const Problem = use('App/Models/Problem')
@@ -117,13 +120,26 @@ class ProblemController {
     let problem
     const trx = await Database.beginTransaction()
     try {
+      let filename = ''
+      if(request.file('file')) {
+        const file = request.file('file')
+        filename = `${moment().format('YYYYMMDDHHmmss')}.${file.subtype}`
+        await file.move(Helpers.publicPath(), {
+          name: filename,
+          overwrite: true
+        })
+        if (!file.moved()) {
+          throw file.error()
+        }
+      }
       problem = await Problem.create({
         title,
         detail,
         description,
         view: 0,
         score: 0,
-        problem_category_id
+        problem_category_id,
+        filename
       }, trx)
       if(isHasChildTrue) {
         await ProblemChild.createMany(child_true.map(c => ({
@@ -235,6 +251,19 @@ class ProblemController {
 
     const trx = await Database.beginTransaction()
     try {
+      if(request.file('file')) {
+        const file = request.file('file')
+        const filename = `${moment().format('YYYYMMDDHHmmss')}.${file.subtype}`
+        await file.move(Helpers.publicPath(), {
+          name: filename,
+          overwrite: true
+        })
+        if (!file.moved()) {
+          throw file.error()
+        }
+        await Drive.delete(Helpers.publicPath(problem.filename))
+        problem.filename = filename
+      }
       problem.title = title
       problem.description = description
       problem.detail = detail
