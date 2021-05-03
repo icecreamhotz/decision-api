@@ -7,7 +7,7 @@ class Problem extends BaseValidator {
     return {
       problem_category_id: 'required',
       title: 'required',
-      detail: ' required',
+      // detail: ' required',
       description: 'required',
       child_true: 'array|max:1',
       child_false: 'array|max:1'

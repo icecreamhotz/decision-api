@@ -59,7 +59,7 @@ class ProblemController {
     const {
       problem_category_id,
       title,
-      detail,
+      detail = '',
       description,
       child_true = [],
       child_false = []
@@ -175,7 +175,7 @@ class ProblemController {
     const { id } = params
     const {
       problem_category_id,
-      detail,
+      detail = '',
       title,
       description,
       child_true = [],
