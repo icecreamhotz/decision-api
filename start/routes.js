@@ -87,6 +87,15 @@ Route.group(() => {
   Route.get('', 'ProblemChildController.getLists')
 }).prefix(`${PREFIX_ROUTE_BOF}/problem-childs`).middleware(['auth'])
 
+Route.group(() => {
+  Route.get('', 'EventController.getLists')
+  Route.get('/:id', 'EventController.getByID')
+  Route.post('', 'EventController.store')
+  Route.put('/:id', 'EventController.update')
+  Route.put('/:id/date', 'EventController.updateDate')
+  Route.delete('/:id', 'EventController.delete')
+}).prefix(`${PREFIX_ROUTE_BOF}/events`).middleware(['auth'])
+
 Route.get(`${PREFIX_ROUTE_BOF}/sidebar`, 'SidebarController.getSidebar').middleware(['auth'])
 
 // Public API

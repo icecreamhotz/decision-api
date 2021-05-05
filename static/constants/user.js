@@ -54,6 +54,13 @@ const MENU = [
     roles: [ROLE.ADMIN, ROLE.STAFF]
   },
   {
+    icon: 'mdi-calendar-range-outline',
+    text: 'จัดการปฏิทิน',
+    route: '/event',
+    children: [],
+    roles: [ROLE.ADMIN, ROLE.STAFF]
+  },
+  {
     icon: 'mdi-logout',
     text: 'ออกจากระบบ',
     route: '/logout',
