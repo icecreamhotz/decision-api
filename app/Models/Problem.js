@@ -23,6 +23,10 @@ class Problem extends Model {
     return this.belongsTo('App/Models/ProblemCategory')
   }
 
+  scores () {
+    return this.hasMany('App/Models/ProblemScoreLog')
+  }
+
   getFilename (filename) {
     return filename ? `${Env.get('BASE_URL')}/public/${filename}` : null
   }

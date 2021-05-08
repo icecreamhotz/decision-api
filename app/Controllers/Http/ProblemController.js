@@ -14,13 +14,17 @@ class ProblemController {
     request
   }) {
     const {
-      page = 1, perPage = 10
+      page = 1, perPage = 10, problem_category_id = ''
     } = request.all()
 
     let problems
     try {
       problems = await Problem.query()
         .with('problem_category')
+        .with('scores')
+        .filter({
+          problem_category_id
+        })
         .paginate(page, perPage)
     } catch(err) {
       console.error(err)

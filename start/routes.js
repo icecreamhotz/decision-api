@@ -96,6 +96,10 @@ Route.group(() => {
   Route.delete('/:id', 'EventController.delete')
 }).prefix(`${PREFIX_ROUTE_BOF}/events`).middleware(['auth'])
 
+Route.group(() => {
+  Route.get('/system-score', 'ReportController.systemScore')
+}).prefix(`${PREFIX_ROUTE_BOF}/reports`).middleware(['auth'])
+
 Route.get(`${PREFIX_ROUTE_BOF}/sidebar`, 'SidebarController.getSidebar').middleware(['auth'])
 
 // Public API
@@ -117,3 +121,7 @@ Route.group(() => {
 Route.group(() => {
   Route.post('', 'Frontend/ProblemDraftController.store').validator(['ProblemDraftFront'])
 }).prefix(`${PREFIX_ROUTE_PUBLIC}/problem-drafts`)
+
+Route.group(() => {
+  Route.get('', 'Frontend/EventController.getLists')
+}).prefix(`${PREFIX_ROUTE_PUBLIC}/events`)

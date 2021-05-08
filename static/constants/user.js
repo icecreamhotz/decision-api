@@ -61,6 +61,27 @@ const MENU = [
     roles: [ROLE.ADMIN, ROLE.STAFF]
   },
   {
+    icon: 'mdi-cellphone-arrow-down',
+    text: 'สถิติความพึงพอใจระบบ',
+    route: '/system-stat',
+    children: [],
+    roles: [ROLE.ADMIN, ROLE.STAFF]
+  },
+  {
+    icon: 'mdi-cellphone-arrow-down',
+    text: 'สถิติวิธีการแก้ไขปัญหา',
+    route: '/system-problem',
+    children: [],
+    roles: [ROLE.ADMIN, ROLE.STAFF]
+  },
+  {
+    icon: 'mdi-cellphone-arrow-down',
+    text: 'สถิติปัญหาที่พบบ่อย',
+    route: '/system-popular',
+    children: [],
+    roles: [ROLE.ADMIN, ROLE.STAFF]
+  },
+  {
     icon: 'mdi-logout',
     text: 'ออกจากระบบ',
     route: '/logout',
