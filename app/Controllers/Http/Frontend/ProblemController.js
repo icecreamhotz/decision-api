@@ -15,7 +15,8 @@ class ProblemController {
       title = '',
       problem_id = '',
       sortBy = 'asc',
-      problem_category_id = ''
+      problem_category_id = '',
+      is_report = ''
     } = request.all()
     
     let problems
@@ -24,14 +25,16 @@ class ProblemController {
         .with('childs')
         .with('problem_category')
         .with('scores')
-        .search({
+      if(!is_report) {
+        problems = problems.search({
           title
         })
         .filter({
           id: problem_id,
           is_head: problem_id ? undefined : true
         })
-        .where('problem_category_id', problem_category_id)
+      }
+      problems = problems.where('problem_category_id', problem_category_id)
         .orderBy('score', sortBy)
         .fetch()
     } catch(err) {
