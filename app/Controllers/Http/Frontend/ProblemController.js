@@ -22,6 +22,8 @@ class ProblemController {
     try {
       problems = await Problem.query()
         .with('childs')
+        .with('problem_category')
+        .with('scores')
         .search({
           title
         })
