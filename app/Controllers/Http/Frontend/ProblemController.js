@@ -21,7 +21,7 @@ class ProblemController {
     
     let problems
     try {
-      problems = await Problem.query()
+      problems = Problem.query()
         .with('childs')
         .with('problem_category')
         .with('scores')
@@ -34,7 +34,7 @@ class ProblemController {
           is_head: problem_id ? undefined : true
         })
       }
-      problems = problems.where('problem_category_id', problem_category_id)
+      problems = await problems.where('problem_category_id', problem_category_id)
         .orderBy('score', sortBy)
         .fetch()
     } catch(err) {
