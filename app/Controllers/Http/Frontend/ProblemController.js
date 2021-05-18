@@ -15,7 +15,7 @@ class ProblemController {
       title = '',
       problem_id = '',
       sortBy = 'asc',
-      problem_category_id
+      problem_category_id = ''
     } = request.all()
     
     let problems

@@ -41,7 +41,7 @@ Route.group(() => {
   Route.post('', 'UserController.store').validator(['User'])
   Route.put('/:id', 'UserController.update').validator(['User'])
   Route.delete('/:id', 'UserController.delete')
-}).prefix(`${PREFIX_ROUTE_BOF}/users`).middleware(['auth'])
+}).prefix(`${PREFIX_ROUTE_BOF}/users`).middleware(['auth', 'can:ADMIN'])
 
 Route.group(() => {
   Route.get('', 'DocumentProblemController.getLists')
@@ -125,3 +125,7 @@ Route.group(() => {
 Route.group(() => {
   Route.get('', 'Frontend/EventController.getLists')
 }).prefix(`${PREFIX_ROUTE_PUBLIC}/events`)
+
+Route.group(() => {
+  Route.get('/system-score', 'Frontend/ReportController.systemScore')
+}).prefix(`${PREFIX_ROUTE_PUBLIC}/reports`)

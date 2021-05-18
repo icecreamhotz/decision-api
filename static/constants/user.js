@@ -16,7 +16,7 @@ const MENU = [
     text: 'จัดการผู้ใช้งานระบบ',
     route: '/user',
     children: [],
-    roles: [ROLE.ADMIN, ROLE.STAFF]
+    roles: [ROLE.ADMIN]
   },
   // {
   //   icon: 'mdi-file',
