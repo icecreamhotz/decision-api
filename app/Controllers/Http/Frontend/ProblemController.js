@@ -16,15 +16,26 @@ class ProblemController {
       problem_id = '',
       sortBy = 'asc',
       problem_category_id = '',
-      is_report = ''
+      is_report = '',
+      year = ''
     } = request.all()
     
     let problems
     try {
-      problems = Problem.query()
-        .with('childs')
-        .with('problem_category')
-        .with('scores')
+      if(year) {
+        problems = Problem.query()
+          .with('childs')
+          .with('problem_category')
+          .with('scores', builder => {
+            builder.where('date', '>=', new Date(moment(`${year}-01-01T00:00:00`)))
+            builder.where('date', '<=', new Date(moment(`${year}-12-31T23:59:59`)))
+          })
+      } else {
+        problems = Problem.query()
+          .with('childs')
+          .with('problem_category')
+          .with('scores')
+      }
       if(!is_report) {
         problems = problems.search({
           title

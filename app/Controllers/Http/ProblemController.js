@@ -14,18 +14,31 @@ class ProblemController {
     request
   }) {
     const {
-      page = 1, perPage = 10, problem_category_id = ''
+      page = 1, perPage = 10, problem_category_id = '', year = ''
     } = request.all()
 
     let problems
     try {
-      problems = await Problem.query()
+      if(year) {
+        problems = await Problem.query()
+        .with('problem_category')
+        .with('scores', builder => {
+          builder.where('date', '>=', new Date(moment(`${year}-01-01T00:00:00`)))
+          builder.where('date', '<=', new Date(moment(`${year}-12-31T23:59:59`)))
+        })
+        .filter({
+          problem_category_id
+        })
+        .paginate(page, perPage)
+      } else {
+        problems = await Problem.query()
         .with('problem_category')
         .with('scores')
         .filter({
           problem_category_id
         })
         .paginate(page, perPage)
+      }
     } catch(err) {
       console.error(err)
       return response.internalServerError()
